@@ -31,6 +31,7 @@ name="$1"
 }
 
 # set execution-specified quota if valid
+# minimum quota is 8KB; allowing quotas lower than this would be pointless
 [ -n "$2" ] && [ "$2" -gt 8192 >&- 2>&- ] && {
     quota="$2"
 } || {

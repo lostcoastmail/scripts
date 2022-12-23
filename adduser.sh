@@ -27,8 +27,14 @@ $LCT_PREFIX/checkname.sh || {
     exit 2
 }
 
+# create a dummy skeleton directory
+mkdir -p /tmp/skel-dummy
+
 # add the user
-useradd --badname --comment "$2" --groups mail --no-log-init --shell $LCT_PREFIX/bin/mail-user -m $1
+useradd --badname --comment "$2" --groups mail --no-log-init --shell $LCT_PREFIX/bin/mail-user --create-home --skel /tmp/skel-dummy $1
+
+# remove the skeleton directory
+rm -rf /tmp/skel-dummy
 
 # make the mail/files dirs
 mkdir -p /home/$1/mail
