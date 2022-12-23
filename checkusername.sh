@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# script to create a user
+# script to determine the validity of a username
 # Copyright 2022 Lost Coast Technologies
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# exit if not root
-[ "${EUID:-${UID:-$(id -u)}}" = "0" ] || {
-    printf "${0##*/}: error: Operation not permitted\n"
-    exit 1
-}
+# we will perform operations on this later, so the variable is defined now
+name="$1"
 
-# check if the username works
-$LCT_PREFIX/checkname.sh || {
-    printf "${0##*/}: \"$1\": Invalid username\n"
-    exit 2
-}
+# check if the name has any invalid characters
+# email handles can only contain letters, numbers, hyphens, underscores, or periods. 
+# Linux supports others, but it's generally bad practice to have non-standardized characters in handles.
+[ -n "$(printf "$name" | tr '[:upper:]' '[:lower:]' | tr -d A-Za-z0-9-_.)" ] && exit 1
 
-# make the mail/files dirs
-mkdir -p $LCT_PREFIX/users/$1/mail
-mkdir -p $LCT_PREFIX/users/$1/files
-
-# add the user
-useradd --badname --comment "$2" --groups mail --no-log-init --shell $LCT_PREFIX/bin/mail-user --home-dir $LCT_PREFIX/users/$1 $1
+# exit if no name is provided
+[ -z "$name" ] && exit 2
