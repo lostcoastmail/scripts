@@ -15,6 +15,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+# exit if not root
+[ "${EUID:-${UID:-$(id -u)}}" = "0" ] || {
+    printf "${0##*/}: error: Operation not permitted\n"
+    exit 1
+}
+
 # we will perform operations on this later, so the variable is defined now
 name="$1"
 
