@@ -27,9 +27,9 @@ $LCT_PREFIX/checkname.sh || {
     exit 2
 }
 
-# make the mail/files dirs
-mkdir -p $LCT_PREFIX/users/$1/mail
-mkdir -p $LCT_PREFIX/users/$1/files
-
 # add the user
-useradd --badname --comment "$2" --groups mail --no-log-init --shell $LCT_PREFIX/bin/mail-user --home-dir $LCT_PREFIX/users/$1 $1
+useradd --badname --comment "$2" --groups mail --no-log-init --shell $LCT_PREFIX/bin/mail-user -m $1
+
+# make the mail/files dirs
+mkdir -p /home/$1/mail
+mkdir -p /home/$1/files
