@@ -27,13 +27,13 @@ name="$1"
 # check if a username was provided
 [ -n "$name" ] || {
     printf "${0##*/}: No user provided\n"
-    exit 1
+    exit 2
 }
 
 # check if this user exists in the account registry
 [ -n "$(awk -F':' '{print $1}' </etc/passwd | grep ^$name\$)" ] || {
     printf "${0##*/}: \"$name\": User not in account registry\n"
-    exit 2
+    exit 3
 }
 
 # set execution-specified quota if valid
