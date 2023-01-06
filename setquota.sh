@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # script to set a user's disk quota, in bytes
-# Copyright (C) 2022 Lost Coast Technologies
+# Ⓒ 2022 Lost Coast Technologies
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
